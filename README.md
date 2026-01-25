@@ -59,7 +59,7 @@ This skill follows the professional approach: **pure documentation that the LLM 
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/agent-creator.git ~/.config/opencode/skills/agent-creator
+git clone https://github.com/rodrigolagodev/agent-creator.git ~/.config/opencode/skills/agent-creator
 ```
 
 ### Verify Installation
