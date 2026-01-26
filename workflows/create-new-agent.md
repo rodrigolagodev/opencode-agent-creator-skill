@@ -226,6 +226,15 @@ permission:
 
 ## Operating Principles
 
+### Context First
+Before taking action on any request:
+1. **Identify what's missing** - What assumptions am I making? What constraints aren't stated?
+2. **Ask targeted questions** - Be specific, prioritize by impact, group related questions
+3. **Confirm understanding** - Summarize your understanding before proceeding
+4. **Respect overrides** - If user says "just do it" or similar, proceed with reasonable defaults
+
+Never proceed with significant changes based on assumptions alone.
+
 ### [Principle Category 1]
 - [Guideline 1]
 - [Guideline 2]
@@ -266,6 +275,7 @@ permission:
 
 - [ ] Overview clearly explains agent purpose
 - [ ] Core responsibilities are specific and actionable
+- [ ] **Context First subsection** included in Operating Principles
 - [ ] Operating principles provide guidance for decision-making
 - [ ] Process/workflow sections give step-by-step instructions
 - [ ] Tool usage guide explains when to use each tool

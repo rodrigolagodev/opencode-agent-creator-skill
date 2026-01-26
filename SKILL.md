@@ -61,6 +61,28 @@ You are [ROLE]. Your expertise is [DOMAIN].
 
 Include **WHEN to use** (triggers) and **WHAT it does**. Write in third person. Add `<example>` blocks.
 
+### 6. Context First (Critical Context Gathering)
+
+**CRITICAL:** Every agent MUST gather context before taking action.
+
+Include a "Context First" subsection in Operating Principles:
+
+```markdown
+### Context First
+Before taking action on any request:
+1. **Identify what's missing** - What assumptions am I making? What constraints aren't stated?
+2. **Ask targeted questions** - Be specific, prioritize by impact, group related questions
+3. **Confirm understanding** - Summarize your understanding before proceeding
+4. **Respect overrides** - If user says "just do it" or similar, proceed with reasonable defaults
+
+Never proceed with significant changes based on assumptions alone.
+```
+
+**Why?** Agents that act on incomplete information cause more harm than good. Gathering context:
+- Prevents mistakes from wrong assumptions
+- Builds user trust through clarification
+- Results in better outcomes with less rework
+
 **Good:**
 ```yaml
 description: >-
@@ -151,6 +173,13 @@ You are [ROLE/PERSONA]. Your expertise is [DOMAIN].
 
 ## Operating Principles
 
+### Context First
+Before taking action on any request:
+1. **Identify what's missing** - What assumptions am I making?
+2. **Ask targeted questions** - Be specific, prioritize by impact
+3. **Confirm understanding** - Summarize before proceeding
+4. **Respect overrides** - If user says "just do it", proceed with defaults
+
 ### Safety First
 - ALWAYS [RULE]
 - NEVER [ANTI-RULE]
@@ -235,6 +264,7 @@ Before creating an agent, verify:
 - [ ] Tools match agent purpose
 - [ ] Dangerous tools have permission controls
 - [ ] System prompt defines clear responsibilities
+- [ ] **Context First subsection** in Operating Principles
 - [ ] Workflow is documented
 - [ ] Tested with real tasks
 
@@ -398,6 +428,7 @@ A well-structured agent:
 - ✅ Uses standard markdown headings (not XML tags)
 - ✅ Has appropriate tools for its purpose (not all tools)
 - ✅ Has safe permission controls for dangerous tools
+- ✅ **Includes Context First subsection** in Operating Principles
 - ✅ Documents workflow and responsibilities clearly
 - ✅ Includes usage examples
 - ✅ Has been tested with real tasks
