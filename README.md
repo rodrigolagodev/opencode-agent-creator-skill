@@ -1,6 +1,6 @@
 # Agent Creator Skill
 
-[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-3.1.0-blue.svg)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![OpenCode](https://img.shields.io/badge/platform-OpenCode-purple.svg)](https://opencode.ai)
 
@@ -303,15 +303,18 @@ Open an issue with:
 
 See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-### Version 3.0.0 (Current)
+### Version 3.1.0 (Current)
+
+**Fixed:**
+- Corrected skill name in frontmatter (`creating-agents` → `agent-creator`)
+- Removed obsolete script references
+- Updated compatibility field to `agent-skills-standard`
+
+### Version 3.0.0
 
 **Breaking Changes:**
 - Removed Python scripts (validation, audit, init)
 - Converted script logic to markdown checklists
-
-**Added:**
-- `references/validation-checklist.md` - Field-by-field validation guide
-- `references/audit-rubric.md` - Quality scoring rubric
 
 **Philosophy:**
 Skills are **pure documentation** for LLM context, not executable software.

@@ -415,10 +415,63 @@ And in the prompt:
 
 ---
 
+## 13. Non-English Content
+
+**Problem:** Writing agent files in languages other than English.
+
+❌ **Bad:**
+```yaml
+description: >-
+  Agente para revisar código y encontrar errores.
+  Usar cuando necesites una revisión de calidad.
+```
+
+```markdown
+# Revisor de Código
+
+Eres un revisor de código experto. Tu trabajo es:
+- Encontrar errores
+- Sugerir mejoras
+```
+
+✅ **Good:**
+```yaml
+description: >-
+  Reviews code for bugs, security issues, and best practices.
+  Use when asked to review, audit, or analyze code quality.
+  
+  <example>
+  User: "Review this code for issues"
+  Assistant: "I'll use the code-reviewer agent."
+  </example>
+```
+
+```markdown
+# Code Reviewer
+
+You are an expert code reviewer. Your responsibilities:
+- Find bugs and edge cases
+- Suggest improvements
+```
+
+**Why it's bad:**
+- LLMs process English more efficiently (faster inference)
+- Lower token usage = lower costs
+- Better comprehension and consistency
+- Less likely to hallucinate or misunderstand
+- Not portable across multilingual teams
+
+**Important:** The agent can still RESPOND in the user's preferred language during conversations. Only the agent FILE (frontmatter + instructions) should be in English.
+
+**Rule:** Always write agent files in English, regardless of user's language.
+
+---
+
 ## Quick Checklist
 
 Before creating an agent, verify you're NOT doing:
 
+- [ ] ❌ Writing agent files in non-English languages
 - [ ] ❌ Enabling all tools "just in case"
 - [ ] ❌ `bash: allow` or `edit: allow` without patterns
 - [ ] ❌ Vague description without triggers

@@ -1,8 +1,8 @@
 ---
-name: creating-agents
+name: agent-creator
 description: Expert guidance for creating, configuring, and refining OpenCode agents. Use when working with agent files, authoring new agents, improving existing agents, or understanding agent structure and best practices. Use PROACTIVELY when user mentions creating agents, configuring tools, setting permissions, or agent architecture.
 license: MIT
-compatibility: opencode
+compatibility: agent-skills-standard
 metadata:
   category: agent-development
   version: "3.0.0"

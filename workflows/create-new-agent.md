@@ -389,24 +389,7 @@ Reference: `references/anti-patterns.md`
 
 ---
 
-## Step 11: Optional - Validate with Script
-
-If you created the validation script:
-
-```bash
-cd ~/.config/opencode/skills/agent-creator/scripts
-python3 validate_agent.py ~/.config/opencode/agent/your-agent-name.md
-```
-
-This will check:
-- YAML frontmatter syntax
-- Required fields present
-- Permission patterns
-- Common anti-patterns
-
----
-
-## Step 12: Document and Deploy
+## Step 11: Document and Deploy
 
 ### Create Agent Documentation
 
@@ -470,7 +453,6 @@ If internal use:
 - [ ] Safety protocols included (if needed)
 - [ ] Agent tested with real scenarios
 - [ ] Reviewed against anti-patterns
-- [ ] Validated with script (if available)
 - [ ] Documentation created
 - [ ] Agent deployed and accessible
 

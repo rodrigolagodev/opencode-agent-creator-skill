@@ -7,6 +7,23 @@ and this skill adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ---
 
+## [3.1.0] - 2026-01-25
+
+### Fixed
+
+- **Corrected skill name in frontmatter** - Changed `name:` from `creating-agents` to `agent-creator` to match the folder name and follow naming conventions
+- **Removed obsolete script references** - Cleaned up remaining references to Python scripts that were removed in v3.0.0
+- **Updated compatibility field** - Changed `compatibility:` value to `agent-skills-standard` for cross-platform consistency
+
+### Why These Changes?
+
+These corrections ensure the skill follows Agent Skills standard conventions:
+- Skill name in frontmatter must match folder name
+- No references to non-existent files
+- Compatibility field uses the universal standard identifier
+
+---
+
 ## [3.0.0] - 2026-01-25
 
 ### Breaking Changes
