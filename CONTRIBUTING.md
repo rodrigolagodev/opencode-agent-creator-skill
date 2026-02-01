@@ -28,6 +28,7 @@ We welcome new agent templates! To add a template:
 6. Update the templates table in `README.md`
 
 **Template Checklist:**
+
 - [ ] Valid YAML frontmatter
 - [ ] Clear description with triggers
 - [ ] At least 1 `<example>` block
@@ -55,9 +56,10 @@ Before creating an issue:
 4. Include relevant agent configuration
 
 **Good Issue Example:**
+
 ```
 **Description**: Template X has invalid YAML syntax
-**Steps to Reproduce**: 
+**Steps to Reproduce**:
 1. Load template X
 2. Try to use agent
 3. See error
@@ -88,26 +90,30 @@ Documentation improvements are always welcome:
 ### Local Setup
 
 1. **Fork the repository**
+
    ```bash
    # Click "Fork" on GitHub
    ```
 
 2. **Clone your fork**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/opencode-agent-creator-skill.git
    cd opencode-agent-creator-skill
    ```
 
 3. **Create a feature branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
 
 4. **Test your changes**
+
    ```bash
    # Copy to OpenCode skills directory
    cp -r . ~/.config/opencode/skills/agent-creator
-   
+
    # Test with OpenCode
    opencode
    # Ask: "Create an agent using the new template"
@@ -133,13 +139,14 @@ Documentation improvements are always welcome:
 ### YAML Frontmatter
 
 Always validate YAML:
+
 ```yaml
 ---
 description: >-
   Clear description.
-  
+
   When to use triggers.
-  
+
   <example>
   User: "request"
   Assistant: "I'll use agent-name."
@@ -164,6 +171,7 @@ refactor: reorganize reference documentation structure
 ```
 
 **Format:**
+
 - `feat:` New features
 - `fix:` Bug fixes
 - `docs:` Documentation changes
@@ -195,6 +203,7 @@ refactor: reorganize reference documentation structure
 ### Submitting
 
 1. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -206,22 +215,27 @@ refactor: reorganize reference documentation structure
    - Add screenshots if relevant
 
 3. **PR Description Template**
+
    ```markdown
    ## Description
+
    Brief description of changes
-   
+
    ## Type of Change
+
    - [ ] New template
    - [ ] Bug fix
    - [ ] Documentation update
    - [ ] Refactoring
-   
+
    ## Testing
+
    - [ ] Tested locally with OpenCode
    - [ ] Validated YAML syntax
    - [ ] Reviewed documentation
-   
+
    ## Checklist
+
    - [ ] Follows project conventions
    - [ ] Updated README (if needed)
    - [ ] Updated CHANGELOG

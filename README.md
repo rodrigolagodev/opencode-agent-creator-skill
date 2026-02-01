@@ -41,16 +41,16 @@ This skill follows the professional approach: **pure documentation that the LLM 
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| **10 Templates** | Pre-configured agents for different use cases |
-| **Frontmatter Spec** | Complete YAML specification with all fields |
-| **Tool Selection Guide** | Decision tree for choosing the right tools |
-| **Permission Patterns** | Library of proven security configurations |
-| **Validation Checklist** | Field-by-field verification guide |
-| **Audit Rubric** | Quality scoring with specific criteria |
-| **Workflows** | Step-by-step guides for common tasks |
-| **Anti-Patterns** | Common mistakes and how to avoid them |
+| Feature                  | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| **10 Templates**         | Pre-configured agents for different use cases |
+| **Frontmatter Spec**     | Complete YAML specification with all fields   |
+| **Tool Selection Guide** | Decision tree for choosing the right tools    |
+| **Permission Patterns**  | Library of proven security configurations     |
+| **Validation Checklist** | Field-by-field verification guide             |
+| **Audit Rubric**         | Quality scoring with specific criteria        |
+| **Workflows**            | Step-by-step guides for common tasks          |
+| **Anti-Patterns**        | Common mistakes and how to avoid them         |
 
 ---
 
@@ -95,6 +95,7 @@ Create an agent for reviewing React components
 ```
 
 The assistant will:
+
 1. Load this skill for guidance
 2. Read relevant templates
 3. Create `~/.config/opencode/agent/react-reviewer.md`
@@ -111,18 +112,18 @@ The assistant will:
 
 Ready-to-use templates for common agent types:
 
-| Template | Description | Mode | Risk |
-|----------|-------------|------|------|
-| [`simple-agent.md`](templates/simple-agent.md) | Basic template with TODOs | all | Low |
-| [`code-reviewer.md`](templates/code-reviewer.md) | Code quality analysis | subagent | Low |
-| [`security-auditor.md`](templates/security-auditor.md) | Security review | subagent | Low |
-| [`doc-writer.md`](templates/doc-writer.md) | Documentation specialist | subagent | Medium |
-| [`refactoring-agent.md`](templates/refactoring-agent.md) | Code refactoring | subagent | Medium |
-| [`testing-agent.md`](templates/testing-agent.md) | Automated testing | subagent | Medium |
-| [`api-developer.md`](templates/api-developer.md) | API development | subagent | Medium |
-| [`frontend-dev.md`](templates/frontend-dev.md) | React/Next.js | subagent | Medium |
-| [`db-admin.md`](templates/db-admin.md) | Database operations | subagent | High |
-| [`devops-agent.md`](templates/devops-agent.md) | CI/CD automation | subagent | High |
+| Template                                                 | Description               | Mode     | Risk   |
+| -------------------------------------------------------- | ------------------------- | -------- | ------ |
+| [`simple-agent.md`](templates/simple-agent.md)           | Basic template with TODOs | all      | Low    |
+| [`code-reviewer.md`](templates/code-reviewer.md)         | Code quality analysis     | subagent | Low    |
+| [`security-auditor.md`](templates/security-auditor.md)   | Security review           | subagent | Low    |
+| [`doc-writer.md`](templates/doc-writer.md)               | Documentation specialist  | subagent | Medium |
+| [`refactoring-agent.md`](templates/refactoring-agent.md) | Code refactoring          | subagent | Medium |
+| [`testing-agent.md`](templates/testing-agent.md)         | Automated testing         | subagent | Medium |
+| [`api-developer.md`](templates/api-developer.md)         | API development           | subagent | Medium |
+| [`frontend-dev.md`](templates/frontend-dev.md)           | React/Next.js             | subagent | Medium |
+| [`db-admin.md`](templates/db-admin.md)                   | Database operations       | subagent | High   |
+| [`devops-agent.md`](templates/devops-agent.md)           | CI/CD automation          | subagent | High   |
 
 ---
 
@@ -164,9 +165,9 @@ agent-creator/
 ---
 description: >-
   Reviews code for quality and best practices.
-  
+
   Use when asked to review, analyze, or check code quality.
-  
+
   <example>
   User: "Review this component"
   Assistant: "I'll use the code-reviewer agent."
@@ -185,7 +186,6 @@ permission:
   write: deny
   bash: deny
 ---
-
 # Code Reviewer
 
 You are a code review specialist...
@@ -193,16 +193,16 @@ You are a code review specialist...
 
 ### Frontmatter Fields
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `description` | Yes | What + when + examples (max 1024 chars) |
-| `mode` | No | `primary`, `subagent`, or `all` (default: `all`) |
-| `tools` | No | Tool enablement `{read: true, write: false}` |
-| `permission` | No | Fine-grained access control |
-| `model` | No | Override model |
-| `temperature` | No | Creativity level (0.1 - 1.0) |
-| `maxSteps` | No | Iteration limit |
-| `hidden` | No | Hide from @ menu |
+| Field         | Required | Description                                      |
+| ------------- | -------- | ------------------------------------------------ |
+| `description` | Yes      | What + when + examples (max 1024 chars)          |
+| `mode`        | No       | `primary`, `subagent`, or `all` (default: `all`) |
+| `tools`       | No       | Tool enablement `{read: true, write: false}`     |
+| `permission`  | No       | Fine-grained access control                      |
+| `model`       | No       | Override model                                   |
+| `temperature` | No       | Creativity level (0.1 - 1.0)                     |
+| `maxSteps`    | No       | Iteration limit                                  |
+| `hidden`      | No       | Hide from @ menu                                 |
 
 See [`references/frontmatter-spec.md`](references/frontmatter-spec.md) for complete specification.
 
@@ -224,13 +224,13 @@ Use the [validation checklist](references/validation-checklist.md) to verify:
 
 Use the [audit rubric](references/audit-rubric.md) to score quality (target: 4.5+/5.0):
 
-| Category | What it measures |
-|----------|------------------|
-| Frontmatter | Description quality, examples, mode |
-| Tool Safety | Minimal tools, appropriate permissions |
-| Instructions | Clear responsibilities, workflow, structure |
-| Security | Dangerous tool controls, permission patterns |
-| Documentation | Limitations, error handling, completeness |
+| Category      | What it measures                             |
+| ------------- | -------------------------------------------- |
+| Frontmatter   | Description quality, examples, mode          |
+| Tool Safety   | Minimal tools, appropriate permissions       |
+| Instructions  | Clear responsibilities, workflow, structure  |
+| Security      | Dangerous tool controls, permission patterns |
+| Documentation | Limitations, error handling, completeness    |
 
 ---
 
@@ -247,28 +247,28 @@ Use the [audit rubric](references/audit-rubric.md) to score quality (target: 4.5
 
 ### Don'ts ❌
 
-| Anti-Pattern | Problem | Solution |
-|--------------|---------|----------|
-| Tool Overload | Enabling all tools | Only necessary ones |
-| Permission Promiscuity | `bash: allow` | Use patterns with deny rules |
-| Vague Description | "Helps with tasks" | Specific triggers and examples |
-| Missing Examples | No `<example>` blocks | Add 1-2 usage examples |
-| Wrong Mode | Security auditor as primary | Use `subagent` for specialists |
+| Anti-Pattern           | Problem                     | Solution                       |
+| ---------------------- | --------------------------- | ------------------------------ |
+| Tool Overload          | Enabling all tools          | Only necessary ones            |
+| Permission Promiscuity | `bash: allow`               | Use patterns with deny rules   |
+| Vague Description      | "Helps with tasks"          | Specific triggers and examples |
+| Missing Examples       | No `<example>` blocks       | Add 1-2 usage examples         |
+| Wrong Mode             | Security auditor as primary | Use `subagent` for specialists |
 
 ---
 
 ## Reference Documentation
 
-| Document | Description |
-|----------|-------------|
-| [`frontmatter-spec.md`](references/frontmatter-spec.md) | Complete YAML specification |
-| [`tool-selection.md`](references/tool-selection.md) | Tool selection decision tree |
-| [`permission-patterns.md`](references/permission-patterns.md) | Security pattern library |
-| [`agent-types.md`](references/agent-types.md) | Agent archetypes with examples |
-| [`anti-patterns.md`](references/anti-patterns.md) | Common mistakes to avoid |
-| [`skills-integration.md`](references/skills-integration.md) | Runtime skill loading |
-| [`validation-checklist.md`](references/validation-checklist.md) | Field-by-field validation |
-| [`audit-rubric.md`](references/audit-rubric.md) | Quality scoring rubric |
+| Document                                                        | Description                    |
+| --------------------------------------------------------------- | ------------------------------ |
+| [`frontmatter-spec.md`](references/frontmatter-spec.md)         | Complete YAML specification    |
+| [`tool-selection.md`](references/tool-selection.md)             | Tool selection decision tree   |
+| [`permission-patterns.md`](references/permission-patterns.md)   | Security pattern library       |
+| [`agent-types.md`](references/agent-types.md)                   | Agent archetypes with examples |
+| [`anti-patterns.md`](references/anti-patterns.md)               | Common mistakes to avoid       |
+| [`skills-integration.md`](references/skills-integration.md)     | Runtime skill loading          |
+| [`validation-checklist.md`](references/validation-checklist.md) | Field-by-field validation      |
+| [`audit-rubric.md`](references/audit-rubric.md)                 | Quality scoring rubric         |
 
 ---
 
@@ -293,6 +293,7 @@ Contributions are welcome! Here's how:
 ### Reporting Issues
 
 Open an issue with:
+
 - Description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
@@ -306,6 +307,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 ### Version 3.1.0 (Current)
 
 **Fixed:**
+
 - Corrected skill name in frontmatter (`creating-agents` → `agent-creator`)
 - Removed obsolete script references
 - Updated compatibility field to `agent-skills-standard`
@@ -313,6 +315,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 ### Version 3.0.0
 
 **Breaking Changes:**
+
 - Removed Python scripts (validation, audit, init)
 - Converted script logic to markdown checklists
 
@@ -338,6 +341,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## Philosophy
 
 > "A great agent is like a skilled specialist:
+>
 > - **Clear** about their expertise (description with triggers)
 > - **Equipped** with the right tools (minimal tool config)
 > - **Careful** with dangerous operations (permission patterns)

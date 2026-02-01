@@ -11,13 +11,13 @@ Safest approach - ask for everything, allow only safe commands.
 ```yaml
 permission:
   bash:
-    "*": ask                    # Ask for all by default
-    "ls *": allow               # Safe: list files
-    "cat *": allow              # Safe: read files
-    "grep *": allow             # Safe: search
-    "git status*": allow        # Safe: check git status
-    "git log*": allow           # Safe: view history
-    "git diff*": allow          # Safe: view changes
+    "*": ask # Ask for all by default
+    "ls *": allow # Safe: list files
+    "cat *": allow # Safe: read files
+    "grep *": allow # Safe: search
+    "git status*": allow # Safe: check git status
+    "git log*": allow # Safe: view history
+    "git diff*": allow # Safe: view changes
 ```
 
 **Use for:** General-purpose agents, untrusted contexts
@@ -32,12 +32,12 @@ Explicitly block destructive operations.
 permission:
   bash:
     "*": ask
-    "rm *": deny                # Never allow rm
+    "rm *": deny # Never allow rm
     "sudo rm *": deny
-    "dd *": deny                # Never allow dd
-    "mkfs*": deny               # Never allow mkfs
-    "> *": deny                 # Never allow redirect overwrite
-    "chmod 777 *": deny         # Never allow 777
+    "dd *": deny # Never allow dd
+    "mkfs*": deny # Never allow mkfs
+    "> *": deny # Never allow redirect overwrite
+    "chmod 777 *": deny # Never allow 777
 ```
 
 **Use for:** Production agents, safety-critical contexts
@@ -53,13 +53,13 @@ permission:
   bash:
     "*": ask
     # PostgreSQL
-    "psql -c 'SELECT*": allow   # Safe: read queries
-    "psql -c 'EXPLAIN*": allow  # Safe: query plans
-    "psql -c 'INSERT*": ask     # Ask: write data
-    "psql -c 'UPDATE*": ask     # Ask: modify data
-    "psql -c 'DELETE*": ask     # Ask: remove data
-    "psql -c 'DROP*": deny      # Deny: destroy schema
-    "psql -c 'TRUNCATE*": deny  # Deny: destroy data
+    "psql -c 'SELECT*": allow # Safe: read queries
+    "psql -c 'EXPLAIN*": allow # Safe: query plans
+    "psql -c 'INSERT*": ask # Ask: write data
+    "psql -c 'UPDATE*": ask # Ask: modify data
+    "psql -c 'DELETE*": ask # Ask: remove data
+    "psql -c 'DROP*": deny # Deny: destroy schema
+    "psql -c 'TRUNCATE*": deny # Deny: destroy data
     # MySQL
     "mysql -e 'SELECT*": allow
     "mysql -e 'DROP*": deny

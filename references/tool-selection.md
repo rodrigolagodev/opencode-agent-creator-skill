@@ -9,12 +9,14 @@ Choosing the right tools for your agent is critical for both functionality and s
 ### File System Tools
 
 #### `bash`
+
 **Purpose**: Execute shell commands  
 **Risk Level**: HIGH  
 **Use When**: Agent needs to run system commands, install packages, manage processes  
-**Permissions Required**: `bash: true`  
+**Permissions Required**: `bash: true`
 
 **Capabilities**:
+
 - Execute any shell command
 - Modify system state
 - Install/remove software
@@ -22,6 +24,7 @@ Choosing the right tools for your agent is critical for both functionality and s
 - Network operations
 
 **Safety Considerations**:
+
 - HIGHEST RISK tool - can do anything the user can do
 - Only grant to fully trusted agents
 - Agent MUST implement safety checks before destructive operations
@@ -32,18 +35,21 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `read`
+
 **Purpose**: Read file contents  
 **Risk Level**: MEDIUM  
 **Use When**: Agent needs to examine files without modification  
-**Permissions Required**: `read: true`  
+**Permissions Required**: `read: true`
 
 **Capabilities**:
+
 - Read any file the user can access
 - View file contents with line numbers
 - Read specific line ranges (offset/limit)
 - Access binary files
 
 **Safety Considerations**:
+
 - Can read sensitive files (credentials, private keys, .env files)
 - Agent should warn before reading potentially sensitive locations
 - Safe for analysis and auditing tasks
@@ -53,17 +59,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `write`
+
 **Purpose**: Create new files or overwrite existing ones  
 **Risk Level**: HIGH  
 **Use When**: Agent needs to create files from scratch  
-**Permissions Required**: `write: true`  
+**Permissions Required**: `write: true`
 
 **Capabilities**:
+
 - Create new files
 - Completely overwrite existing files
 - Write to any user-accessible location
 
 **Safety Considerations**:
+
 - Can destroy existing file contents
 - Should REQUIRE read permission first to check if file exists
 - Agent MUST warn before overwriting
@@ -74,18 +83,21 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `edit`
+
 **Purpose**: Make surgical changes to existing files  
 **Risk Level**: MEDIUM  
 **Use When**: Agent needs to modify existing files precisely  
-**Permissions Required**: `edit: true`  
+**Permissions Required**: `edit: true`
 
 **Capabilities**:
+
 - Replace exact text matches
 - Preserve file structure and formatting
 - Replace all occurrences with `replaceAll`
 - Safer than write for modifications
 
 **Safety Considerations**:
+
 - Requires exact string matching - fails if text not found
 - Cannot create new files (this is a safety feature)
 - Safer than write because changes are explicit
@@ -95,17 +107,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `glob`
+
 **Purpose**: Find files by pattern matching  
 **Risk Level**: LOW  
 **Use When**: Agent needs to locate files by name/pattern  
-**Permissions Required**: `glob: true`  
+**Permissions Required**: `glob: true`
 
 **Capabilities**:
+
 - Fast pattern matching (`**/*.js`, `src/**/*.tsx`)
 - Returns file paths sorted by modification time
 - Works with any codebase size
 
 **Safety Considerations**:
+
 - Read-only operation
 - Very safe - only returns file paths
 - No ability to modify files
@@ -115,18 +130,21 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `grep`
+
 **Purpose**: Search file contents using regex  
 **Risk Level**: LOW  
 **Use When**: Agent needs to find files containing specific patterns  
-**Permissions Required**: `grep: true`  
+**Permissions Required**: `grep: true`
 
 **Capabilities**:
+
 - Fast content search across entire codebase
 - Full regex support
 - Filter by file patterns
 - Returns file paths and line numbers
 
 **Safety Considerations**:
+
 - Read-only operation
 - Very safe - only returns matches
 - No ability to modify files
@@ -138,17 +156,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ### Integration Tools
 
 #### `task`
+
 **Purpose**: Delegate complex tasks to specialized sub-agents  
 **Risk Level**: VARIES (depends on sub-agent)  
 **Use When**: Agent needs to delegate specialized work  
-**Permissions Required**: `task: true`  
+**Permissions Required**: `task: true`
 
 **Capabilities**:
+
 - Launch sub-agents (general, explore, frontend-developer, etc.)
 - Parallel task execution
 - Stateless or session-based delegation
 
 **Safety Considerations**:
+
 - Sub-agent inherits its own tool permissions
 - Risk level depends on which sub-agent is called
 - Main agent should validate results from sub-agents
@@ -158,17 +179,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `skill`
+
 **Purpose**: Load specialized knowledge from skill files  
 **Risk Level**: NONE  
 **Use When**: Agent needs reference documentation or best practices  
-**Permissions Required**: `skill: true`  
+**Permissions Required**: `skill: true`
 
 **Capabilities**:
+
 - Load SKILL.md files on-demand
 - Access specialized knowledge bases
 - Get step-by-step guidance
 
 **Safety Considerations**:
+
 - Completely safe - read-only knowledge access
 - No file system or command execution
 - Cannot modify anything
@@ -178,17 +202,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `webfetch`
+
 **Purpose**: Fetch content from URLs  
 **Risk Level**: LOW-MEDIUM  
 **Use When**: Agent needs to retrieve web content or documentation  
-**Permissions Required**: `webfetch: true`  
+**Permissions Required**: `webfetch: true`
 
 **Capabilities**:
+
 - Fetch URLs in markdown, text, or HTML format
 - Access online documentation
 - Retrieve API responses
 
 **Safety Considerations**:
+
 - Read-only operation
 - Can access any public URL
 - Risk: Could fetch malicious content (agent should validate)
@@ -201,17 +228,20 @@ Choosing the right tools for your agent is critical for both functionality and s
 ### Organizational Tools
 
 #### `todowrite`
+
 **Purpose**: Create and manage task lists  
 **Risk Level**: NONE  
 **Use When**: Agent handles multi-step complex tasks  
-**Permissions Required**: `todowrite: true`  
+**Permissions Required**: `todowrite: true`
 
 **Capabilities**:
+
 - Create structured task lists
 - Track task states (pending, in_progress, completed, cancelled)
 - Organize complex workflows
 
 **Safety Considerations**:
+
 - Completely safe - only manages todo items
 - No file system access
 - Cannot execute commands
@@ -221,16 +251,19 @@ Choosing the right tools for your agent is critical for both functionality and s
 ---
 
 #### `todoread`
+
 **Purpose**: Read current task list  
 **Risk Level**: NONE  
 **Use When**: Agent needs to check task status  
-**Permissions Required**: `todoread: true`  
+**Permissions Required**: `todoread: true`
 
 **Capabilities**:
+
 - View current todo list
 - Check task states
 
 **Safety Considerations**:
+
 - Completely safe - read-only
 - No side effects
 
@@ -241,6 +274,7 @@ Choosing the right tools for your agent is critical for both functionality and s
 ## Tool Combination Patterns
 
 ### Read-Only Analyst Pattern
+
 ```yaml
 tools:
   read: true
@@ -258,6 +292,7 @@ tools:
 ---
 
 ### Safe Editor Pattern
+
 ```yaml
 tools:
   read: true
@@ -276,6 +311,7 @@ tools:
 ---
 
 ### Full Developer Pattern
+
 ```yaml
 tools:
   read: true
@@ -295,6 +331,7 @@ tools:
 ---
 
 ### System Administrator Pattern
+
 ```yaml
 tools:
   bash: true
@@ -314,6 +351,7 @@ tools:
 ---
 
 ### Orchestrator Pattern
+
 ```yaml
 tools:
   task: true
@@ -332,6 +370,7 @@ tools:
 ---
 
 ### Research Pattern
+
 ```yaml
 tools:
   webfetch: true
@@ -356,19 +395,19 @@ tools:
 ```
 1. Only analyze/review code?
    → Read-Only Analyst Pattern
-   
+
 2. Fix bugs or refactor existing code?
    → Safe Editor Pattern
-   
+
 3. Generate new features or scaffold projects?
    → Full Developer Pattern
-   
+
 4. Manage system, install packages, run services?
    → System Administrator Pattern
-   
+
 5. Coordinate multiple specialized tasks?
    → Orchestrator Pattern
-   
+
 6. Fetch documentation or research online?
    → Research Pattern
 ```
@@ -411,6 +450,7 @@ bash → read (system agents need to read config files)
 ## Anti-Patterns
 
 ### ❌ DON'T: Grant bash without safety instructions
+
 ```yaml
 tools:
   bash: true
@@ -418,10 +458,12 @@ tools:
 ```
 
 ### ✅ DO: Grant bash with comprehensive safeguards
+
 ```yaml
 tools:
   bash: true
 ```
+
 ```markdown
 ## Safety Protocols
 
@@ -434,6 +476,7 @@ tools:
 ---
 
 ### ❌ DON'T: Grant write without read
+
 ```yaml
 tools:
   write: true
@@ -441,6 +484,7 @@ tools:
 ```
 
 ### ✅ DO: Grant write with read
+
 ```yaml
 tools:
   read: true
@@ -450,6 +494,7 @@ tools:
 ---
 
 ### ❌ DON'T: Grant all tools "just in case"
+
 ```yaml
 tools:
   bash: true
@@ -466,6 +511,7 @@ tools:
 ```
 
 ### ✅ DO: Grant only what's needed
+
 ```yaml
 tools:
   read: true
@@ -498,6 +544,7 @@ After selecting tools, verify:
 Start restrictive, then expand if needed:
 
 **Phase 1: Read-Only**
+
 ```yaml
 tools:
   read: true
@@ -506,6 +553,7 @@ tools:
 ```
 
 **Phase 2: Add Safe Editing** (if analysis isn't enough)
+
 ```yaml
 tools:
   read: true
@@ -515,6 +563,7 @@ tools:
 ```
 
 **Phase 3: Add File Creation** (if editing isn't enough)
+
 ```yaml
 tools:
   read: true
@@ -525,6 +574,7 @@ tools:
 ```
 
 **Phase 4: Add System Access** (only if absolutely necessary)
+
 ```yaml
 tools:
   bash: true

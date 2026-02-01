@@ -23,6 +23,7 @@ Create a code review agent that checks for best practices
 ```
 
 The agent will:
+
 1. Load the agent-creator skill
 2. Read the code-reviewer template
 3. Create `~/.config/opencode/agents/code-reviewer.md`
@@ -48,6 +49,7 @@ Create a security auditor agent that focuses on SQL injection and XSS vulnerabil
 ```
 
 The skill will guide the creation with:
+
 - Appropriate tool selection (read, glob, grep)
 - Permission patterns (deny write/bash)
 - Security-focused instructions
@@ -62,6 +64,7 @@ Audit my testing-agent and suggest improvements
 ```
 
 The assistant will:
+
 1. Load the audit workflow
 2. Read your agent configuration
 3. Score it using the rubric
@@ -74,6 +77,7 @@ Show me all available agent templates in agent-creator
 ```
 
 You'll see:
+
 - Template names and descriptions
 - Risk levels
 - Recommended modes
@@ -86,6 +90,7 @@ What tools should I use for a database migration agent?
 ```
 
 The assistant will:
+
 1. Load tool-selection reference
 2. Analyze the task requirements
 3. Recommend appropriate tools
@@ -98,6 +103,7 @@ What are common mistakes when creating agents?
 ```
 
 The assistant will reference:
+
 - Anti-patterns documentation
 - Real examples of problems
 - Solutions and best practices
@@ -123,9 +129,9 @@ Templates contain `TODO:` markers:
 ---
 description: >-
   TODO: Describe what this agent does
-  
+
   TODO: Add trigger phrases
-  
+
   <example>
   User: "TODO: example request"
   Assistant: "TODO: example response"
@@ -242,6 +248,7 @@ Yes! Templates are starting points. Customize them for your needs.
 ### Q: My agent isn't showing up
 
 Check:
+
 - File is in `~/.config/opencode/agents/`
 - File has `.md` extension
 - YAML frontmatter is valid

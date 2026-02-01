@@ -7,17 +7,20 @@ This workflow guides you through auditing an existing OpenCode agent for quality
 ## Audit Types
 
 ### Quick Audit (5-10 minutes)
+
 - Frontmatter validation
 - Permission check
 - Basic anti-pattern scan
 
 ### Comprehensive Audit (20-30 minutes)
+
 - Full quality review
 - Security assessment
 - Performance optimization
 - Documentation completeness
 
 ### Security-Focused Audit (15-20 minutes)
+
 - Permission safety
 - Sensitive operation handling
 - Input validation
@@ -33,13 +36,13 @@ This workflow guides you through auditing an existing OpenCode agent for quality
 ---
 description: >-
   What this agent does. Use when [triggers].
-  
+
   <example>
   User: "Request"
   Assistant: "I'll use agent X."
   </example>
 
-mode: subagent  # or: primary, all
+mode: subagent # or: primary, all
 
 tools:
   read: true
@@ -53,6 +56,7 @@ permission:
 ```
 
 **Check:**
+
 - [ ] YAML syntax is valid (no tabs, proper indentation)
 - [ ] `description` field exists and is descriptive (required)
 - [ ] `description` includes `<example>` blocks
@@ -61,6 +65,7 @@ permission:
 - [ ] `permission` controls dangerous tools
 
 **Common Issues:**
+
 - ❌ Tabs instead of spaces in YAML
 - ❌ Missing closing `---` marker
 - ❌ Using old `name`/`skills`/`permissions` fields (deprecated)
@@ -73,11 +78,13 @@ permission:
 Reference: `references/tool-selection.md` and `references/permission-patterns.md`
 
 **High-Risk Tools (require `permission` controls):**
+
 - `bash: true` - Can execute system commands
 - `write: true` - Can overwrite files
 - `edit: true` - Can modify files
 
 **Check:**
+
 - [ ] If `bash` enabled: Has `permission.bash` patterns?
 - [ ] If `bash` enabled: Dangerous commands denied?
 - [ ] If `write` enabled: `read` also enabled?
@@ -86,6 +93,7 @@ Reference: `references/tool-selection.md` and `references/permission-patterns.md
 - [ ] No unnecessary tools enabled?
 
 **Red Flags:**
+
 - ❌ `bash: true` without `permission.bash` controls
 - ❌ `write: true` without `read: true`
 - ❌ All tools enabled but agent only needs a few
@@ -100,6 +108,7 @@ Reference: `references/anti-patterns.md`
 Quick scan for common issues:
 
 **Anti-Pattern 1: Kitchen Sink Tools**
+
 ```yaml
 # ❌ BAD: Enabling all tools unnecessarily
 tools:
@@ -117,6 +126,7 @@ tools:
 ```
 
 **Anti-Pattern 2: Missing Permission Controls**
+
 ```yaml
 # ❌ BAD: bash without permission patterns
 tools:
@@ -134,6 +144,7 @@ permission:
 ```
 
 **Anti-Pattern 3: Vague Description**
+
 ```yaml
 # ❌ BAD: Unclear purpose
 description: Helps with development tasks
@@ -142,7 +153,7 @@ description: Helps with development tasks
 description: >-
   Refactors React components for performance optimization.
   Use when asked to review, optimize, or analyze React code.
-  
+
   <example>
   User: "Optimize this component"
   Assistant: "I'll use react-optimizer."
@@ -150,6 +161,7 @@ description: >-
 ```
 
 **Check:**
+
 - [ ] No kitchen sink tools
 - [ ] No bash without permission controls
 - [ ] Description includes triggers and examples
@@ -168,6 +180,7 @@ description: >-
 **Agent**: [agent-name]
 
 **Frontmatter Review:**
+
 - Description: [clear with examples / unclear - feedback]
 - Mode: [appropriate for use case / wrong]
 - Tools: [minimal/excessive - suggestions]
@@ -180,6 +193,7 @@ description: >-
 #### Instruction Organization
 
 **Check:**
+
 - [ ] Has clear "Overview" or intro section
 - [ ] Core responsibilities listed
 - [ ] Operating principles defined
@@ -197,6 +211,7 @@ description: >-
 #### Clarity
 
 **Questions:**
+
 1. Can a new user understand what the agent does?
 2. Are instructions clear and actionable?
 3. Are examples realistic and helpful?
@@ -205,6 +220,7 @@ description: >-
 **Rating**: [Clear / Somewhat Clear / Unclear]
 
 **Improvements Needed:**
+
 - [ ] Simplify complex explanations
 - [ ] Add more examples
 - [ ] Define technical terms
@@ -215,6 +231,7 @@ description: >-
 #### Completeness
 
 **Check:**
+
 - [ ] All granted tools have usage guidance
 - [ ] Common use cases covered
 - [ ] Error handling explained
@@ -222,6 +239,7 @@ description: >-
 - [ ] Limitations clearly stated
 
 **Missing Elements:**
+
 - [List what's missing]
 
 **Completeness Score**: [1-5] ⭐
@@ -231,12 +249,14 @@ description: >-
 #### Consistency
 
 **Check:**
+
 - [ ] Permissions match tool usage in instructions
 - [ ] Description matches actual capabilities
 - [ ] Examples align with core responsibilities
 - [ ] No contradictory guidance
 
 **Inconsistencies Found:**
+
 - [List inconsistencies]
 
 **Consistency Score**: [1-5] ⭐
@@ -248,11 +268,13 @@ description: >-
 #### Permission Review
 
 **Granted Permissions:**
+
 - [List all permissions]
 
 **Risk Level:** [LOW / MEDIUM / HIGH]
 
 **Security Checklist:**
+
 - [ ] Permissions follow least privilege principle
 - [ ] High-risk permissions (bash, write) justified
 - [ ] Safety protocols match risk level
@@ -260,6 +282,7 @@ description: >-
 - [ ] Sensitive data handling covered (if applicable)
 
 **Security Issues:**
+
 - [List any security concerns]
 
 **Security Score**: [1-5] ⭐
@@ -269,6 +292,7 @@ description: >-
 #### Safety Protocol Review
 
 **For agents with `bash: true`:**
+
 - [ ] Confirmation prompts before destructive operations
 - [ ] Path verification before file operations
 - [ ] Disk space checks before large operations
@@ -276,6 +300,7 @@ description: >-
 - [ ] Rollback procedures documented
 
 **For agents with `write: true`:**
+
 - [ ] File existence checks before overwriting
 - [ ] Warning before overwriting existing files
 - [ ] Preference for `edit` over `write` for modifications
@@ -291,15 +316,18 @@ description: >-
 Skills are loaded at runtime via the `skill` tool, not declared in frontmatter.
 
 **Check:**
+
 - [ ] Agent has `skill: true` in tools if it needs to load skills
 - [ ] Instructions explain when to load which skills
 - [ ] Skills are loaded only when needed (not preemptively)
 
 **Example guidance in agent instructions:**
+
 ```markdown
 ## When to Load Skills
 
 Load skills at runtime based on the task:
+
 - Security reviews → Load `security-review`
 - React code → Load `vercel-react-best-practices`
 - API design → Load `backend-patterns`
@@ -310,12 +338,14 @@ Load skills at runtime based on the task:
 #### Tool Efficiency
 
 **Check:**
+
 - [ ] Uses appropriate tool for each task (grep vs bash grep)
 - [ ] Avoids redundant tool operations
 - [ ] Leverages todowrite for complex multi-step tasks
 - [ ] Uses glob/grep for searches instead of bash find
 
 **Optimization Suggestions:**
+
 - [List improvements]
 
 ---
@@ -325,6 +355,7 @@ Load skills at runtime based on the task:
 #### User-Facing Documentation
 
 **Check:**
+
 - [ ] Agent purpose clearly explained
 - [ ] Common use cases documented
 - [ ] Example workflows provided
@@ -338,6 +369,7 @@ Load skills at runtime based on the task:
 #### Internal Documentation
 
 **Check:**
+
 - [ ] Operating principles guide agent behavior
 - [ ] Decision-making criteria clear
 - [ ] Tool selection rationale provided
@@ -354,6 +386,7 @@ Load skills at runtime based on the task:
 #### 1. Exposed Secrets Risk
 
 **If agent has `read` or `bash`:**
+
 - [ ] Instructions warn against logging sensitive files
 - [ ] .env files handled carefully
 - [ ] Credentials not exposed in output
@@ -364,6 +397,7 @@ Load skills at runtime based on the task:
 #### 2. Destructive Operation Safety
 
 **If agent has `bash` or `write`:**
+
 - [ ] Confirmation required before:
   - [ ] File deletion
   - [ ] Database operations
@@ -377,6 +411,7 @@ Load skills at runtime based on the task:
 #### 3. Input Validation
 
 **If agent processes user input:**
+
 - [ ] Input sanitization addressed
 - [ ] Path traversal prevention (file paths)
 - [ ] Command injection prevention (bash commands)
@@ -387,6 +422,7 @@ Load skills at runtime based on the task:
 #### 4. Privilege Escalation
 
 **If agent has `bash`:**
+
 - [ ] sudo usage controlled
 - [ ] User confirmation required for privileged operations
 - [ ] Principle of least privilege followed
@@ -395,12 +431,12 @@ Load skills at runtime based on the task:
 
 ### Security Risk Matrix
 
-| Risk Area | Level | Mitigated? | Notes |
-|-----------|-------|------------|-------|
-| Data exposure | [H/M/L] | [Y/N] | |
-| Destructive ops | [H/M/L] | [Y/N] | |
-| Privilege escalation | [H/M/L] | [Y/N] | |
-| Input validation | [H/M/L] | [Y/N] | |
+| Risk Area            | Level   | Mitigated? | Notes |
+| -------------------- | ------- | ---------- | ----- |
+| Data exposure        | [H/M/L] | [Y/N]      |       |
+| Destructive ops      | [H/M/L] | [Y/N]      |       |
+| Privilege escalation | [H/M/L] | [Y/N]      |       |
+| Input validation     | [H/M/L] | [Y/N]      |       |
 
 **Overall Security Risk**: [LOW / MEDIUM / HIGH]
 
@@ -424,6 +460,7 @@ Load skills at runtime based on the task:
 **Risk Level**: [LOW / MEDIUM / HIGH]
 
 **Key Findings**:
+
 - [Major finding 1]
 - [Major finding 2]
 - [Major finding 3]
@@ -435,67 +472,81 @@ Load skills at runtime based on the task:
 ## Detailed Findings
 
 ### Frontmatter Quality: [X/5] ⭐
+
 **Issues**:
+
 - [Issue 1]
 - [Issue 2]
 
 **Recommendations**:
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 ---
 
 ### Permission Safety: [X/5] ⭐
+
 **Current Permissions**:
 \`\`\`yaml
 permissions:
-  bash: true
-  read: true
-  ...
+bash: true
+read: true
+...
 \`\`\`
 
 **Issues**:
+
 - [Issue 1]
 - [Issue 2]
 
 **Recommended Changes**:
 \`\`\`yaml
 permissions:
-  read: true
-  edit: true
-  ...
+read: true
+edit: true
+...
 \`\`\`
 
 ---
 
 ### Instruction Quality: [X/5] ⭐
+
 **Strengths**:
+
 - [Strength 1]
 - [Strength 2]
 
 **Weaknesses**:
+
 - [Weakness 1]
 - [Weakness 2]
 
 **Improvements**:
+
 - [Improvement 1]
 - [Improvement 2]
 
 ---
 
 ### Security Assessment: [X/5] ⭐
+
 **Security Risks Identified**:
+
 - [Risk 1]
 - [Risk 2]
 
 **Mitigation Required**:
+
 - [Mitigation 1]
 - [Mitigation 2]
 
 ---
 
 ### Documentation: [X/5] ⭐
+
 **Missing Documentation**:
+
 - [Missing item 1]
 - [Missing item 2]
 
@@ -504,18 +555,22 @@ permissions:
 ## Priority Action Items
 
 ### Critical (Fix Immediately)
+
 1. [Critical issue]
 2. [Critical issue]
 
 ### High Priority (Fix Soon)
+
 1. [High priority issue]
 2. [High priority issue]
 
 ### Medium Priority (Improve When Possible)
+
 1. [Medium priority issue]
 2. [Medium priority issue]
 
 ### Low Priority (Nice to Have)
+
 1. [Low priority issue]
 2. [Low priority issue]
 
@@ -524,20 +579,26 @@ permissions:
 ## Recommended Changes
 
 ### Frontmatter
-\`\`\`yaml
----
+
+## \`\`\`yaml
+
 name: improved-agent-name
 description: More specific description here
 skills:
-  - relevant-skill-1
-permissions:
+
+- relevant-skill-1
+  permissions:
   read: true
   edit: true
+
 ---
+
 \`\`\`
 
 ### Instructions
+
 \`\`\`markdown
+
 ## Add Missing Section
 
 [Content to add]
@@ -565,26 +626,32 @@ permissions:
 ## Common Audit Findings
 
 ### Finding 1: Over-Permissioned Agent
+
 **Issue**: Agent has more permissions than needed  
 **Fix**: Remove unused permissions, follow least privilege principle
 
 ### Finding 2: Missing Safety Protocols
+
 **Issue**: Agent with bash permission lacks safety checks  
 **Fix**: Add confirmation prompts, backup procedures, verification steps
 
 ### Finding 3: Vague Instructions
+
 **Issue**: Instructions are unclear or too general  
 **Fix**: Add specific examples, step-by-step workflows, clarify expected behavior
 
 ### Finding 4: Missing Skill Integration
+
 **Issue**: Agent doesn't explain when to load skills  
 **Fix**: Add "When to Load Skills" section with runtime loading guidance
 
 ### Finding 5: Incomplete Documentation
+
 **Issue**: Missing sections like limitations, examples, or tool usage  
 **Fix**: Add comprehensive documentation following template structure
 
 ### Finding 6: Security Gaps
+
 **Issue**: Sensitive operations lack proper safeguards  
 **Fix**: Add input validation, sanitization, confirmation prompts
 
@@ -603,6 +670,7 @@ permissions:
 ## Reference
 
 For detailed scoring criteria, see:
+
 - [`references/validation-checklist.md`](../references/validation-checklist.md) - Field-by-field validation
 - [`references/audit-rubric.md`](../references/audit-rubric.md) - Scoring rubric with deductions
 

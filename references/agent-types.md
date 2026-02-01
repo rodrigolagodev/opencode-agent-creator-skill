@@ -24,17 +24,19 @@ This document provides detailed patterns for common agent types. Each pattern in
 ## Code Reviewer
 
 ### Purpose
+
 Analyze code quality, identify issues, suggest improvements without making changes.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Analyzes code for quality, performance, and best practices.
   Read-only reviews with detailed feedback.
-  
+
   Use when asked to review code quality, check for bugs, or analyze architecture.
-  
+
   <example>
   User: "Review this component for issues"
   Assistant: "I'll use `code-reviewer` to analyze it."
@@ -52,10 +54,11 @@ tools:
 ---
 ```
 
-> **Note:** Load skills at runtime using the `skill` tool. For example, load 
+> **Note:** Load skills at runtime using the `skill` tool. For example, load
 > `vercel-react-best-practices` when reviewing React code.
 
 ### Tool Selection Rationale
+
 - **read**: Examine code files
 - **glob/grep**: Find files and patterns to review
 - **skill**: Reference best practices during review
@@ -64,14 +67,17 @@ tools:
 - **NO bash**: No system access needed for review
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Analyze code quality and architecture
 2. Identify bugs, anti-patterns, and security issues
 3. Suggest improvements with examples
 4. Reference best practices from loaded skills
 
 ## Review Process
+
 1. Understand the codebase structure
 2. Create todo list for files to review
 3. Analyze each file systematically
@@ -79,6 +85,7 @@ tools:
 5. Prioritize findings by severity
 
 ## Review Categories
+
 - Code Quality (readability, maintainability)
 - Performance (inefficiencies, optimization opportunities)
 - Security (vulnerabilities, unsafe patterns)
@@ -87,6 +94,7 @@ tools:
 ```
 
 ### When to Use This Pattern
+
 - Code review workflows
 - Pre-commit quality checks
 - Learning/mentoring scenarios
@@ -97,17 +105,19 @@ tools:
 ## Security Auditor
 
 ### Purpose
+
 Identify security vulnerabilities, unsafe patterns, and compliance issues.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Identifies security vulnerabilities, unsafe patterns, and compliance issues.
   Read-only security analysis with severity classification.
-  
+
   Use when reviewing authentication, authorization, or handling sensitive data.
-  
+
   <example>
   User: "Audit this login endpoint for security issues"
   Assistant: "I'll use `security-auditor` to review it."
@@ -129,6 +139,7 @@ tools:
 > **Note:** Load `security-review` skill at runtime for security best practices and checklists.
 
 ### Tool Selection Rationale
+
 - **read**: Examine code for security issues
 - **glob/grep**: Find sensitive patterns (API keys, auth code, etc.)
 - **skill**: Reference security best practices
@@ -137,8 +148,10 @@ tools:
 - **NO write/edit/bash**: Audit only, no modifications
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Identify security vulnerabilities and unsafe patterns
 2. Check for exposed secrets and credentials
 3. Analyze authentication and authorization logic
@@ -146,6 +159,7 @@ tools:
 5. Check dependency vulnerabilities
 
 ## Security Audit Process
+
 1. Scan for exposed secrets (.env, hardcoded keys)
 2. Review authentication mechanisms
 3. Analyze authorization and access control
@@ -155,6 +169,7 @@ tools:
 7. Analyze dependency security
 
 ## Severity Classification
+
 - CRITICAL: Immediate security risk (exposed secrets, SQL injection)
 - HIGH: Significant vulnerability (weak auth, missing validation)
 - MEDIUM: Security weakness (missing HTTPS, weak crypto)
@@ -162,6 +177,7 @@ tools:
 ```
 
 ### When to Use This Pattern
+
 - Pre-deployment security audits
 - Compliance reviews (GDPR, PCI-DSS)
 - Penetration testing preparation
@@ -172,17 +188,19 @@ tools:
 ## Documentation Writer
 
 ### Purpose
+
 Generate, update, and maintain documentation from code analysis.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Generates and maintains documentation from code analysis.
   Creates README, API docs, and guides.
-  
+
   Use when asked to document code, create README, or write API documentation.
-  
+
   <example>
   User: "Create documentation for this API"
   Assistant: "I'll use `doc-writer` to generate the docs."
@@ -201,6 +219,7 @@ tools:
 ```
 
 ### Tool Selection Rationale
+
 - **read**: Analyze code to document
 - **write**: Create new documentation files
 - **glob/grep**: Find code patterns to document
@@ -209,8 +228,10 @@ tools:
 - **NO bash**: No system access needed
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Generate README files with setup instructions
 2. Create API documentation from code analysis
 3. Write user guides and tutorials
@@ -218,6 +239,7 @@ tools:
 5. Keep documentation in sync with code
 
 ## Documentation Types
+
 - README.md (project overview, setup, usage)
 - API.md (endpoint documentation, parameters)
 - CONTRIBUTING.md (development guidelines)
@@ -225,6 +247,7 @@ tools:
 - User guides (tutorials, how-to guides)
 
 ## Documentation Standards
+
 - Clear, concise language
 - Code examples with expected output
 - Installation/setup steps
@@ -233,6 +256,7 @@ tools:
 ```
 
 ### When to Use This Pattern
+
 - Open source projects
 - API documentation generation
 - Onboarding documentation
@@ -243,17 +267,19 @@ tools:
 ## Refactoring Agent
 
 ### Purpose
+
 Improve code structure, readability, and maintainability through surgical edits.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Improves code structure through safe, surgical edits.
   Focuses on readability, maintainability, and best practices.
-  
+
   Use when asked to refactor, clean up, or restructure code.
-  
+
   <example>
   User: "Refactor this component to be more readable"
   Assistant: "I'll use `refactoring-agent` to improve the structure."
@@ -275,6 +301,7 @@ tools:
 > **Note:** Load `vercel-react-best-practices` when refactoring React/Next.js code.
 
 ### Tool Selection Rationale
+
 - **read**: Understand code before refactoring
 - **edit**: Make surgical, precise changes
 - **glob/grep**: Find refactoring opportunities
@@ -284,8 +311,10 @@ tools:
 - **NO bash**: No system access needed
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Improve code readability and structure
 2. Extract repeated code into reusable functions
 3. Rename variables/functions for clarity
@@ -293,6 +322,7 @@ tools:
 5. Apply framework best practices
 
 ## Refactoring Process
+
 1. Analyze code to identify improvement opportunities
 2. Create refactoring plan with todo list
 3. Make one change at a time
@@ -300,6 +330,7 @@ tools:
 5. Suggest testing after refactoring
 
 ## Refactoring Types
+
 - Extract function/component
 - Rename for clarity
 - Simplify conditional logic
@@ -308,6 +339,7 @@ tools:
 ```
 
 ### When to Use This Pattern
+
 - Code cleanup sprints
 - Technical debt reduction
 - Post-code review improvements
@@ -318,17 +350,19 @@ tools:
 ## Feature Developer
 
 ### Purpose
+
 Build new features from scratch, including file creation and comprehensive implementation.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Builds new features from requirements. Creates files, implements logic,
   and integrates with existing code.
-  
+
   Use when asked to implement new features, create components, or build modules.
-  
+
   <example>
   User: "Build a user authentication feature"
   Assistant: "I'll use `feature-developer` to implement this."
@@ -352,6 +386,7 @@ tools:
 > `backend-patterns` for API development.
 
 ### Tool Selection Rationale
+
 - **read**: Understand existing codebase
 - **write**: Create new feature files
 - **edit**: Integrate with existing files
@@ -361,8 +396,10 @@ tools:
 - **NO bash**: Features typically don't need system access
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Understand feature requirements
 2. Design feature architecture
 3. Create necessary files and components
@@ -371,6 +408,7 @@ tools:
 6. Follow project patterns and conventions
 
 ## Development Process
+
 1. Analyze requirements and acceptance criteria
 2. Create implementation plan (todo list)
 3. Identify files to create and modify
@@ -379,6 +417,7 @@ tools:
 6. Suggest testing approach
 
 ## Code Quality Standards
+
 - Follow existing project patterns
 - Write self-documenting code
 - Add comments for complex logic
@@ -387,6 +426,7 @@ tools:
 ```
 
 ### When to Use This Pattern
+
 - New feature implementation
 - Module creation
 - Component library development
@@ -397,17 +437,19 @@ tools:
 ## System Administrator
 
 ### Purpose
+
 Manage system configuration, packages, services, and maintenance tasks.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Linux system administration including package management, services,
   configuration, and maintenance.
-  
+
   Use when asked to manage packages, configure services, or troubleshoot systems.
-  
+
   <example>
   User: "Install and configure nginx"
   Assistant: "I'll use `sysadmin` to set that up."
@@ -439,6 +481,7 @@ permission:
 > **Note:** Load `linux-sysadmin` skill for system administration best practices.
 
 ### Tool Selection Rationale
+
 - **bash**: Execute system commands (apt, systemctl, etc.)
 - **read**: Examine config files and logs
 - **edit**: Modify configuration files
@@ -448,8 +491,10 @@ permission:
 - **write**: Usually edit is safer for configs
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Manage packages and software installation
 2. Configure and monitor system services
 3. Manage file permissions and ownership
@@ -457,6 +502,7 @@ permission:
 5. Maintain system security and updates
 
 ## Safety Protocols
+
 - ALWAYS ask confirmation before destructive operations
 - NEVER execute rm -rf without explicit approval
 - CHECK disk space before large operations
@@ -464,6 +510,7 @@ permission:
 - VERIFY paths before operations
 
 ## Common Operations
+
 - Package management (apt, dnf, pacman)
 - Service management (systemctl)
 - File permissions (chmod, chown)
@@ -472,6 +519,7 @@ permission:
 ```
 
 ### When to Use This Pattern
+
 - Server maintenance
 - Software installation and updates
 - System configuration
@@ -482,17 +530,19 @@ permission:
 ## Database Administrator
 
 ### Purpose
+
 Manage databases, optimize queries, handle migrations, and maintain data integrity.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Database administration including schema design, query optimization,
   migrations, and backups.
-  
+
   Use when working with databases, migrations, or query performance.
-  
+
   <example>
   User: "Create a migration for the users table"
   Assistant: "I'll use `db-admin` to handle that."
@@ -523,6 +573,7 @@ permission:
 > **Note:** Load `backend-patterns` skill for database best practices.
 
 ### Tool Selection Rationale
+
 - **bash**: Run database CLI tools (psql, mysql, mongosh)
 - **read**: Examine schema files and migration scripts
 - **write**: Create new migrations and schema files
@@ -532,8 +583,10 @@ permission:
 - **todo**: Track complex migration tasks
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Design and maintain database schemas
 2. Create and manage migrations
 3. Optimize query performance
@@ -541,6 +594,7 @@ permission:
 5. Monitor database health and performance
 
 ## Safety Protocols
+
 - ALWAYS backup before schema changes
 - TEST migrations on development database first
 - NEVER run DROP commands on production without explicit approval
@@ -548,6 +602,7 @@ permission:
 - ROLLBACK plan for every migration
 
 ## Common Operations
+
 - Schema design and migrations
 - Index optimization
 - Query performance analysis
@@ -556,6 +611,7 @@ permission:
 ```
 
 ### When to Use This Pattern
+
 - Database schema design
 - Migration management
 - Query optimization
@@ -566,17 +622,19 @@ permission:
 ## Testing Agent
 
 ### Purpose
+
 Create, run, and maintain automated tests for code quality assurance.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Creates and maintains automated tests. Writes unit, integration,
   and e2e tests following best practices.
-  
+
   Use when asked to write tests, improve coverage, or fix failing tests.
-  
+
   <example>
   User: "Write tests for this component"
   Assistant: "I'll use `testing-agent` to create the tests."
@@ -607,6 +665,7 @@ permission:
 > **Note:** Load `vercel-react-best-practices` when testing React components.
 
 ### Tool Selection Rationale
+
 - **bash**: Run test commands (npm test, pytest, etc.)
 - **read**: Analyze code to test
 - **write**: Create new test files
@@ -616,8 +675,10 @@ permission:
 - **todo**: Track test coverage goals
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Write unit tests for functions and components
 2. Create integration tests for workflows
 3. Develop e2e tests for critical paths
@@ -625,6 +686,7 @@ permission:
 5. Run tests and analyze failures
 
 ## Testing Principles
+
 - Write clear, descriptive test names
 - Follow AAA pattern (Arrange, Act, Assert)
 - Test edge cases and error conditions
@@ -632,6 +694,7 @@ permission:
 - Maintain high coverage for critical code
 
 ## Test Types
+
 - Unit tests (individual functions/components)
 - Integration tests (module interactions)
 - E2E tests (user workflows)
@@ -640,6 +703,7 @@ permission:
 ```
 
 ### When to Use This Pattern
+
 - TDD (Test-Driven Development)
 - Adding tests to legacy code
 - Maintaining test suites
@@ -650,17 +714,19 @@ permission:
 ## DevOps Agent
 
 ### Purpose
+
 Manage CI/CD pipelines, deployments, infrastructure, and automation.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Manages CI/CD pipelines, deployments, infrastructure as code,
   and automation workflows.
-  
+
   Use when working with deployments, CI/CD, or infrastructure automation.
-  
+
   <example>
   User: "Set up a GitHub Actions workflow"
   Assistant: "I'll use `devops-agent` to configure that."
@@ -693,6 +759,7 @@ permission:
 > **Note:** Load `backend-patterns` skill for DevOps best practices.
 
 ### Tool Selection Rationale
+
 - **bash**: Run deployment commands, CLI tools
 - **read**: Examine config files and logs
 - **write**: Create pipeline configs, IaC files
@@ -703,8 +770,10 @@ permission:
 - **todo**: Track deployment steps
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Design and maintain CI/CD pipelines
 2. Manage infrastructure as code
 3. Automate deployment processes
@@ -712,6 +781,7 @@ permission:
 5. Implement security and compliance automation
 
 ## Safety Protocols
+
 - NEVER deploy to production without user approval
 - ALWAYS verify staging deployment first
 - TEST rollback procedures
@@ -719,6 +789,7 @@ permission:
 - MAINTAIN audit logs of changes
 
 ## Common Operations
+
 - CI/CD pipeline configuration (GitHub Actions, GitLab CI)
 - Infrastructure as Code (Terraform, CloudFormation)
 - Container orchestration (Docker, Kubernetes)
@@ -727,6 +798,7 @@ permission:
 ```
 
 ### When to Use This Pattern
+
 - CI/CD pipeline creation
 - Infrastructure automation
 - Deployment management
@@ -737,17 +809,19 @@ permission:
 ## API Developer
 
 ### Purpose
+
 Design, implement, and document RESTful and GraphQL APIs.
 
 ### Frontmatter Pattern
+
 ```yaml
 ---
 description: >-
   Designs and implements RESTful and GraphQL APIs with proper validation,
   error handling, and documentation.
-  
+
   Use when creating API endpoints, designing schemas, or implementing backends.
-  
+
   <example>
   User: "Create a REST API for user management"
   Assistant: "I'll use `api-developer` to build that."
@@ -777,6 +851,7 @@ permission:
 > **Note:** Load `backend-patterns` for API design and `security-review` for security best practices.
 
 ### Tool Selection Rationale
+
 - **bash**: Run API testing tools (curl, httpie)
 - **read**: Analyze existing API code
 - **write**: Create new endpoint files
@@ -786,8 +861,10 @@ permission:
 - **todo**: Track API development tasks
 
 ### Core Instruction Structure
+
 ```markdown
 ## Core Responsibilities
+
 1. Design RESTful API endpoints
 2. Implement request validation and error handling
 3. Add authentication and authorization
@@ -795,6 +872,7 @@ permission:
 5. Ensure security best practices
 
 ## API Design Principles
+
 - Follow REST conventions (GET, POST, PUT, DELETE)
 - Use proper HTTP status codes
 - Implement pagination for list endpoints
@@ -802,6 +880,7 @@ permission:
 - Return consistent error formats
 
 ## Security Requirements
+
 - Validate all input data
 - Implement authentication (JWT, OAuth)
 - Add rate limiting
@@ -811,6 +890,7 @@ permission:
 ```
 
 ### When to Use This Pattern
+
 - API endpoint creation
 - API documentation
 - Backend service development
@@ -851,12 +931,13 @@ What is the primary task?
 You can combine elements from multiple patterns for hybrid agents:
 
 ### Example: Full-Stack Developer
+
 ```yaml
 ---
 description: >-
   Full-stack developer for end-to-end feature implementation.
   Handles frontend, backend, and database work.
-  
+
   <example>
   User: "Build a complete user dashboard"
   Assistant: "I'll use `fullstack-dev` for this."
@@ -887,12 +968,13 @@ permission:
 > `backend-patterns` for API, `security-review` for auth flows.
 
 ### Example: Security-Aware Developer
+
 ```yaml
 ---
 description: >-
   Security-conscious developer that builds features with security in mind.
   Validates inputs, handles auth, and follows security best practices.
-  
+
   <example>
   User: "Implement secure file upload"
   Assistant: "I'll use `secure-dev` to build this safely."

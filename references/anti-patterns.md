@@ -7,6 +7,7 @@ Common mistakes to avoid when creating OpenCode agents.
 **Problem:** Enabling all tools "just in case" without considering if they're actually needed.
 
 ❌ **Bad:**
+
 ```yaml
 tools:
   read: true
@@ -21,6 +22,7 @@ tools:
 ```
 
 ✅ **Good:**
+
 ```yaml
 tools:
   read: true
@@ -30,6 +32,7 @@ tools:
 ```
 
 **Why it's bad:**
+
 - Increases attack surface
 - Confuses the agent with too many options
 - Makes permission management complex
@@ -44,28 +47,31 @@ tools:
 **Problem:** Giving dangerous permissions without controls.
 
 ❌ **Bad:**
+
 ```yaml
 tools:
   bash: true
 permission:
-  bash: allow  # Allows `rm -rf /` without asking!
+  bash: allow # Allows `rm -rf /` without asking!
 ```
 
 ✅ **Good:**
+
 ```yaml
 tools:
   bash: true
 permission:
   bash:
-    "*": ask                    # Ask for all by default
-    "git status*": allow        # Allow safe commands
+    "*": ask # Ask for all by default
+    "git status*": allow # Allow safe commands
     "ls *": allow
     "cat *": allow
-    "rm *": deny                # Deny dangerous
+    "rm *": deny # Deny dangerous
     "sudo rm *": deny
 ```
 
 **Why it's bad:**
+
 - System can be damaged
 - Data can be lost
 - Security vulnerabilities
@@ -80,23 +86,26 @@ permission:
 **Problem:** Description doesn't explain when to use the agent.
 
 ❌ **Bad:**
+
 ```yaml
 description: Helps with coding tasks
 ```
 
 ❌ **Also Bad:**
+
 ```yaml
 description: General purpose development agent
 ```
 
 ✅ **Good:**
+
 ```yaml
 description: >-
   Reviews React components for performance issues including
   bundle size, re-renders, and waterfall patterns.
-  
+
   Use when asked to review, optimize, or analyze React/Next.js code.
-  
+
   <example>
   User: "Review this component for performance bottlenecks"
   Assistant: "I'll use the `react-reviewer` agent."
@@ -104,6 +113,7 @@ description: >-
 ```
 
 **Why it's bad:**
+
 - Agent won't be auto-selected correctly
 - User doesn't know when to invoke it
 - Other agents don't know when to delegate to it
@@ -117,20 +127,22 @@ description: >-
 **Problem:** No `<example>` blocks in description showing typical usage.
 
 ❌ **Bad:**
+
 ```yaml
 description: Security auditing agent for code review
 ```
 
 ✅ **Good:**
+
 ```yaml
 description: >-
   Security auditor for authentication and authorization code.
-  
+
   <example>
   User: "Audit this login endpoint"
   Assistant: "I'll use the `security-auditor` agent."
   </example>
-  
+
   <example>
   User: "Check this API for security issues"
   Assistant: "Let me invoke `security-auditor` to review it."
@@ -138,6 +150,7 @@ description: >-
 ```
 
 **Why it's bad:**
+
 - Other agents don't know how to invoke it
 - Unclear what requests should trigger it
 - Harder to discover and use
@@ -151,6 +164,7 @@ description: >-
 **Problem:** Using wrong mode for agent's purpose.
 
 ❌ **Bad:**
+
 ```yaml
 # Security auditor as primary - user must Tab to it!
 description: Security auditor
@@ -158,6 +172,7 @@ mode: primary
 ```
 
 ✅ **Good:**
+
 ```yaml
 # Security auditor as subagent - invoked when needed
 description: Security auditor for...
@@ -165,11 +180,13 @@ mode: subagent
 ```
 
 **Mode Selection Guide:**
+
 - `primary` - Main development agents (build, plan)
 - `subagent` - Specialized tasks (@security-auditor, @doc-writer)
 - `all` - Flexible agents that work both ways
 
 **Why it's bad:**
+
 - Primary agents compete for Tab key
 - Subagents are more composable
 - Wrong mode breaks workflow
@@ -183,6 +200,7 @@ mode: subagent
 **Problem:** Agent has instructions but no clear process.
 
 ❌ **Bad:**
+
 ```markdown
 You are a code reviewer. Review code for quality.
 Check for bugs. Look for performance issues.
@@ -190,6 +208,7 @@ Suggest improvements. Write good code.
 ```
 
 ✅ **Good:**
+
 ```markdown
 You are a code reviewer.
 
@@ -209,6 +228,7 @@ You are a code reviewer.
 ```
 
 **Why it's bad:**
+
 - No clear execution path
 - Inconsistent results
 - Hard to debug issues
@@ -223,6 +243,7 @@ You are a code reviewer.
 **Problem:** Vague instructions that rely on model to figure out details.
 
 ❌ **Bad:**
+
 ```markdown
 Handle errors appropriately.
 Use best practices.
@@ -230,10 +251,12 @@ Be careful with permissions.
 ```
 
 ✅ **Good:**
+
 ```markdown
 ## Error Handling
 
 When a command fails:
+
 1. Read the error message carefully
 2. Check common issues:
    - Permissions? Run with sudo or check file ownership
@@ -245,6 +268,7 @@ When a command fails:
 ```
 
 **Why it's bad:**
+
 - Inconsistent behavior
 - Model has to guess intent
 - Results vary by model
@@ -259,6 +283,7 @@ When a command fails:
 **Problem:** Agent tries to do too many unrelated things.
 
 ❌ **Bad:**
+
 ```yaml
 description: >-
   Code reviewer, database admin, documentation writer,
@@ -267,12 +292,14 @@ description: >-
 
 ✅ **Good:**
 Create separate agents:
+
 - `code-reviewer` - Code quality only
 - `db-admin` - Database operations only
 - `doc-writer` - Documentation only
 - `security-auditor` - Security only
 
 **Why it's bad:**
+
 - Violates single responsibility principle
 - Hard to configure tools/permissions
 - Unclear when to use
@@ -287,16 +314,19 @@ Create separate agents:
 **Problem:** Using OS-specific or absolute paths.
 
 ❌ **Bad:**
+
 ```markdown
 Check configuration in C:\Users\Name\.config\app\config.json
 ```
 
 ❌ **Also Bad:**
+
 ```markdown
 Look for configs in /home/username/.config
 ```
 
 ✅ **Good:**
+
 ```markdown
 Check configuration in `~/.config/app/config.json`
 
@@ -304,6 +334,7 @@ Or check project-local config in `.config/app.json`
 ```
 
 **Why it's bad:**
+
 - Doesn't work across systems
 - Breaks for different users
 - Not portable
@@ -317,11 +348,13 @@ Or check project-local config in `.config/app.json`
 **Problem:** Including information that will become outdated.
 
 ❌ **Bad:**
+
 ```markdown
 Use React 18.2.0 - the latest version as of 2024.
 ```
 
 ✅ **Good:**
+
 ```markdown
 Use the latest stable React version.
 
@@ -332,6 +365,7 @@ React 18+: Use `ReactDOM.createRoot()`
 ```
 
 **Why it's bad:**
+
 - Becomes inaccurate over time
 - Requires constant updates
 - Confuses users with old info
@@ -345,6 +379,7 @@ React 18+: Use `ReactDOM.createRoot()`
 **Problem:** Bash enabled but permissions not documented.
 
 ❌ **Bad:**
+
 ```yaml
 tools:
   bash: true
@@ -355,6 +390,7 @@ permission:
 No explanation in the prompt about what commands are allowed.
 
 ✅ **Good:**
+
 ```yaml
 tools:
   bash: true
@@ -366,21 +402,26 @@ permission:
 ```
 
 And in the prompt:
+
 ```markdown
 ## Command Permissions
 
 **Allowed without asking:**
+
 - `git status`, `git log`, `git diff` - Safe git read commands
 - `ls`, `cat`, `grep` - File read operations
 
 **Requires confirmation:**
+
 - All other commands
 
 **Denied:**
+
 - `rm *` - File deletion (too dangerous)
 ```
 
 **Why it's bad:**
+
 - Agent confused about what it can do
 - Users don't know what will trigger prompts
 - Inconsistent behavior
@@ -394,6 +435,7 @@ And in the prompt:
 **Problem:** Agent name doesn't follow conventions.
 
 ❌ **Bad:**
+
 - `my-helper-agent`
 - `tool-utils`
 - `claude-security`
@@ -401,12 +443,14 @@ And in the prompt:
 - `NEW_AGENT`
 
 ✅ **Good:**
+
 - `security-auditor` (noun-role)
 - `reviewing-code` (gerund form)
 - `doc-writer` (noun-role)
 - `analyzing-performance` (gerund form)
 
 **Why it's bad:**
+
 - Harder to discover
 - Inconsistent with ecosystem
 - Unprofessional
@@ -420,6 +464,7 @@ And in the prompt:
 **Problem:** Writing agent files in languages other than English.
 
 ❌ **Bad:**
+
 ```yaml
 description: >-
   Agente para revisar código y encontrar errores.
@@ -430,16 +475,18 @@ description: >-
 # Revisor de Código
 
 Eres un revisor de código experto. Tu trabajo es:
+
 - Encontrar errores
 - Sugerir mejoras
 ```
 
 ✅ **Good:**
+
 ```yaml
 description: >-
   Reviews code for bugs, security issues, and best practices.
   Use when asked to review, audit, or analyze code quality.
-  
+
   <example>
   User: "Review this code for issues"
   Assistant: "I'll use the code-reviewer agent."
@@ -450,11 +497,13 @@ description: >-
 # Code Reviewer
 
 You are an expert code reviewer. Your responsibilities:
+
 - Find bugs and edge cases
 - Suggest improvements
 ```
 
 **Why it's bad:**
+
 - LLMs process English more efficiently (faster inference)
 - Lower token usage = lower costs
 - Better comprehension and consistency
@@ -503,6 +552,7 @@ cat ~/.config/opencode/agent/linux-sysadmin.md
 ```
 
 Study their structure:
+
 - Clear description with examples
 - Appropriate tools for purpose
 - Safe permission controls

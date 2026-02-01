@@ -7,6 +7,7 @@ Use this checklist to validate an agent file before deployment. The agent can re
 ## How to Use
 
 When validating an agent, read the agent file and check each item below. Mark issues as:
+
 - **Error** - Must fix before use
 - **Warning** - Should fix for quality
 - **Info** - Optional improvement
@@ -16,6 +17,7 @@ When validating an agent, read the agent file and check each item below. Mark is
 ## 1. File Structure
 
 ### Frontmatter Presence
+
 - [ ] File starts with `---`
 - [ ] Has closing `---` after YAML block
 - [ ] YAML parses without errors
@@ -28,20 +30,22 @@ When validating an agent, read the agent file and check each item below. Mark is
 ## 2. Required Fields
 
 ### description (Required)
+
 - [ ] Field exists and is a string
 - [ ] Length is 20-1024 characters
 - [ ] Contains trigger keywords ("Use when...", "Use for...", "Invoke when...")
 - [ ] Contains at least one `<example>` block
 
 **Validation:**
+
 ```yaml
 # Good
 description: >-
   Reviews code for security vulnerabilities.
-  
+
   Use when asked to audit code, check for security issues,
   or review authentication implementations.
-  
+
   <example>
   User: "Check this login code for vulnerabilities"
   Assistant: "I'll use the security-auditor agent."
@@ -56,10 +60,12 @@ description: Security helper
 ## 3. Optional Fields
 
 ### mode
+
 - [ ] If present, value is one of: `primary`, `subagent`, `all`
 - [ ] Default is `all` if not specified
 
 **Validation:**
+
 ```yaml
 # Valid
 mode: subagent
@@ -69,17 +75,20 @@ mode: helper  # Error: not a valid mode
 ```
 
 ### tools
+
 - [ ] If present, is a dictionary/object
 - [ ] All keys are valid tool names
 - [ ] All values are boolean (true/false)
 
 **Valid tool names:**
+
 ```
 bash, read, write, edit, glob, grep,
 task, skill, webfetch, todoread, todowrite
 ```
 
 **Validation:**
+
 ```yaml
 # Good
 tools:
@@ -95,11 +104,13 @@ tools:
 ```
 
 ### permission
+
 - [ ] If present, is a dictionary/object
 - [ ] Values are either: string (`allow`, `ask`, `deny`) or pattern dictionary
 - [ ] Pattern dictionaries have valid permission levels
 
 **Validation:**
+
 ```yaml
 # Good - simple permissions
 permission:
@@ -122,18 +133,22 @@ permission:
 ```
 
 ### model
+
 - [ ] If present, is a string
 - [ ] Format is `provider/model-id` (e.g., `anthropic/claude-sonnet-4`)
 
 ### temperature
+
 - [ ] If present, is a number
 - [ ] Value is between 0.0 and 1.0
 
 ### maxSteps
+
 - [ ] If present, is an integer
 - [ ] Value is at least 1
 
 ### hidden
+
 - [ ] If present, is a boolean
 - [ ] Only meaningful when `mode: subagent`
 
@@ -143,11 +158,11 @@ permission:
 
 These fields should NOT be present:
 
-| Field | Status | Replacement |
-|-------|--------|-------------|
-| `name` | Deprecated | Name comes from filename |
-| `skills` | Deprecated | Load skills at runtime via skill tool |
-| `permissions` | Renamed | Use `permission` (singular) |
+| Field         | Status     | Replacement                           |
+| ------------- | ---------- | ------------------------------------- |
+| `name`        | Deprecated | Name comes from filename              |
+| `skills`      | Deprecated | Load skills at runtime via skill tool |
+| `permissions` | Renamed    | Use `permission` (singular)           |
 
 **Error if:** Any deprecated field is present
 
@@ -163,6 +178,7 @@ These fields should NOT be present:
 - [ ] If `edit: true`, also has `read: true`
 
 **Warning if:**
+
 - 9+ tools enabled
 - bash without permission configuration
 - write/edit without read
@@ -172,17 +188,20 @@ These fields should NOT be present:
 ## 6. Body Content
 
 ### Structure
+
 - [ ] Has content after frontmatter
 - [ ] Uses `##` headings for organization
 - [ ] Has at least 3 sections
 
 ### Recommended Sections
+
 - [ ] Role definition (first paragraph)
 - [ ] Core Responsibilities
 - [ ] Workflow or Process
 - [ ] Limitations (what agent CANNOT do)
 
 ### Safety (if bash enabled)
+
 - [ ] Contains safety keywords: ALWAYS, NEVER, verify, confirm, backup, check
 - [ ] Has at least 3 safety-related instructions
 
@@ -194,15 +213,19 @@ These fields should NOT be present:
 ## Validation Report for [agent-name]
 
 ### Errors (Must Fix)
+
 - [ ] ...
 
 ### Warnings (Should Fix)
+
 - [ ] ...
 
 ### Info (Optional)
+
 - [ ] ...
 
 ### Result
+
 [ ] PASS - No errors
 [ ] FAIL - Has errors that must be fixed
 ```
@@ -217,14 +240,18 @@ When asked to validate an agent, output a report like:
 ## Validation Report: code-reviewer.md
 
 ### Errors
+
 None
 
 ### Warnings
+
 1. Description could include more trigger keywords
 
 ### Info
+
 1. Consider adding error handling section
 
 ### Result: PASS
+
 Agent is valid and ready for use.
 ```

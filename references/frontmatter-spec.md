@@ -13,17 +13,18 @@ Complete reference for agent YAML frontmatter configuration.
 What the agent does AND when to use it. Write in third person. Include `<example>` blocks.
 
 **Format:**
+
 ```yaml
 description: >-
   [What it does in 1-2 sentences]
-  
+
   Use when [trigger conditions].
-  
+
   <example>
   User: "[typical user request]"
   Assistant: "I'll use the `agent-name` agent to [action]."
   </example>
-  
+
   <example>
   User: "[another example]"
   Assistant: "[another response]"
@@ -31,6 +32,7 @@ description: >-
 ```
 
 **Best Practices:**
+
 - Include specific trigger keywords (review, analyze, audit, create, etc.)
 - Add 1-2 `<example>` blocks showing typical usage
 - Use third person: "Use when..." not "You should use..."
@@ -40,14 +42,15 @@ description: >-
 **Examples:**
 
 ✅ **Good:**
+
 ```yaml
 description: >-
   Security auditor that analyzes authentication and authorization code.
   Checks for SQL injection, XSS, CSRF, and data exposure vulnerabilities.
-  
+
   Use when reviewing security of API endpoints, authentication flows,
   or handling sensitive data.
-  
+
   <example>
   User: "Audit this login endpoint for security issues"
   Assistant: "I'll use the `security-auditor` agent to review it."
@@ -55,6 +58,7 @@ description: >-
 ```
 
 ❌ **Bad:**
+
 ```yaml
 description: Security helper
 ```
@@ -73,16 +77,19 @@ description: Security helper
 Determines how the agent can be used.
 
 **Values:**
+
 - `primary` - User switches to this agent (Tab key)
 - `subagent` - Invoked by @mention or other agents via Task tool
 - `all` - Can be used as both primary and subagent
 
 **When to use:**
+
 - `primary` - Main development agents (build, plan)
 - `subagent` - Specialized agents invoked when needed (code-reviewer, security-auditor)
 - `all` - Flexible agents that work in both contexts
 
 **Example:**
+
 ```yaml
 mode: subagent
 ```
@@ -97,6 +104,7 @@ mode: subagent
 Enable/disable specific tools for this agent.
 
 **Available Tools:**
+
 - `read` - Read files
 - `write` - Write new files
 - `edit` - Edit existing files
@@ -110,6 +118,7 @@ Enable/disable specific tools for this agent.
 - `skill` - Load skills (rarely disabled)
 
 **Format:**
+
 ```yaml
 tools:
   read: true
@@ -122,6 +131,7 @@ tools:
 Agent-specific tool config overrides global config.
 
 **Best Practices:**
+
 - Only enable tools needed for the agent's purpose
 - Disable dangerous tools (bash, write, edit) if not needed
 - Read-only agents: only enable read, grep, glob
@@ -130,6 +140,7 @@ Agent-specific tool config overrides global config.
 **Examples:**
 
 Code Reviewer (read-only):
+
 ```yaml
 tools:
   read: true
@@ -141,6 +152,7 @@ tools:
 ```
 
 System Administrator:
+
 ```yaml
 tools:
   read: true
@@ -150,6 +162,7 @@ tools:
 ```
 
 Documentation Writer:
+
 ```yaml
 tools:
   read: true
@@ -169,11 +182,13 @@ tools:
 Control what operations the agent can perform with enabled tools.
 
 **Permission Levels:**
+
 - `allow` - Auto-allow without asking
 - `ask` - Prompt user for approval
 - `deny` - Reject operation
 
 **Supported Tools:**
+
 - `edit` - File editing permissions
 - `bash` - Shell command permissions (supports patterns)
 - `webfetch` - Web fetching permissions
@@ -181,6 +196,7 @@ Control what operations the agent can perform with enabled tools.
 - `task` - Subagent spawning permissions (supports patterns)
 
 **Format:**
+
 ```yaml
 permission:
   edit: ask
@@ -204,22 +220,23 @@ Use glob patterns to control specific commands:
 ```yaml
 permission:
   bash:
-    "*": ask                      # Default: ask for everything
-    "ls *": allow                 # Allow ls
-    "cat *": allow                # Allow cat
-    "git status*": allow          # Allow git status
-    "git log*": allow             # Allow git log
-    "git diff*": allow            # Allow git diff
-    "rm *": deny                  # Never allow rm
-    "sudo rm *": deny             # Never allow sudo rm
-    "dd *": deny                  # Never allow dd
-    "mkfs*": deny                 # Never allow mkfs
+    "*": ask # Default: ask for everything
+    "ls *": allow # Allow ls
+    "cat *": allow # Allow cat
+    "git status*": allow # Allow git status
+    "git log*": allow # Allow git log
+    "git diff*": allow # Allow git diff
+    "rm *": deny # Never allow rm
+    "sudo rm *": deny # Never allow sudo rm
+    "dd *": deny # Never allow dd
+    "mkfs*": deny # Never allow mkfs
 ```
 
 **Rule Precedence:**
 Last matching rule wins. Put `"*"` first, then specific rules.
 
 **Best Practices:**
+
 - Always set bash permissions if bash is enabled
 - Use `ask` as safe default
 - Deny dangerous commands (rm, dd, mkfs)
@@ -229,6 +246,7 @@ Last matching rule wins. Put `"*"` first, then specific rules.
 **Examples:**
 
 Security Auditor (no modifications):
+
 ```yaml
 permission:
   edit: deny
@@ -237,6 +255,7 @@ permission:
 ```
 
 System Administrator (controlled bash):
+
 ```yaml
 permission:
   bash:
@@ -251,6 +270,7 @@ permission:
 ```
 
 Research Agent (web access):
+
 ```yaml
 permission:
   edit: deny
@@ -269,11 +289,13 @@ permission:
 Override the model for this agent.
 
 **Format:**
+
 ```yaml
 model: anthropic/claude-sonnet-4-20250514
 ```
 
 **Common Models:**
+
 - `anthropic/claude-sonnet-4` - Balanced performance
 - `anthropic/claude-haiku-4` - Fast, cheaper
 - `anthropic/claude-opus-4` - Most capable
@@ -281,11 +303,13 @@ model: anthropic/claude-sonnet-4-20250514
 - `opencode/gpt-5.1-codex` - Via OpenCode Zen
 
 **When to Override:**
+
 - Cheaper model for simple agents (haiku for planner)
 - More capable model for complex agents (opus for architect)
 - Specific model requirements
 
 **Example:**
+
 ```yaml
 # Use cheaper model for planning
 model: anthropic/claude-haiku-4-20250514
@@ -303,6 +327,7 @@ model: anthropic/claude-haiku-4-20250514
 Control randomness and creativity of responses.
 
 **Ranges:**
+
 - **0.0 - 0.2** - Very focused, deterministic (code analysis, planning)
 - **0.3 - 0.5** - Balanced (general development)
 - **0.6 - 1.0** - Creative, varied (brainstorming, writing)
@@ -310,16 +335,19 @@ Control randomness and creativity of responses.
 **Examples:**
 
 Code Reviewer (precise):
+
 ```yaml
 temperature: 0.1
 ```
 
 General Builder (balanced):
+
 ```yaml
 temperature: 0.3
 ```
 
 Creative Writer (varied):
+
 ```yaml
 temperature: 0.7
 ```
@@ -334,13 +362,15 @@ temperature: 0.7
 Maximum agentic iterations before forcing text-only response.
 
 **When to Use:**
+
 - Cost control
 - Prevent runaway iterations
 - Quick agents with limited scope
 
 **Example:**
+
 ```yaml
-maxSteps: 10  # Stop after 10 iterations
+maxSteps: 10 # Stop after 10 iterations
 ```
 
 When limit reached, agent receives system prompt to summarize work and recommend remaining tasks.
@@ -357,11 +387,13 @@ When limit reached, agent receives system prompt to summarize work and recommend
 Hide subagent from @ autocomplete menu.
 
 **When to Use:**
+
 - Internal helper agents
 - Programmatically invoked agents
 - Agents only called by other agents via Task tool
 
 **Example:**
+
 ```yaml
 mode: subagent
 hidden: true
@@ -380,10 +412,10 @@ Full-featured agent configuration:
 description: >-
   Software architecture specialist for system design, scalability,
   and technical decision-making.
-  
+
   Use PROACTIVELY when planning new features, refactoring large systems,
   or making architectural decisions.
-  
+
   <example>
   User: "Design the architecture for a new payment system"
   Assistant: "I'll use the `architect` agent for this."
@@ -412,7 +444,6 @@ temperature: 0.2
 
 maxSteps: 50
 ---
-
 You are a senior software architect...
 ```
 
@@ -421,6 +452,7 @@ You are a senior software architect...
 ## Validation Rules
 
 **Filename (Agent Name):**
+
 - 1-64 characters
 - Lowercase alphanumeric + hyphens
 - No consecutive `--`
@@ -432,26 +464,32 @@ You are a senior software architect...
 > File `~/.config/opencode/agent/code-reviewer.md` creates agent `code-reviewer`.
 
 **Description:**
+
 - 1-1024 characters
 - Must include trigger keywords
 - Should include `<example>` blocks
 - Third person voice
 
 **Mode:**
+
 - Must be: `primary`, `subagent`, or `all`
 
 **Tools:**
+
 - Only valid tool names
 - Boolean values
 
 **Permission:**
+
 - Valid permission levels: `allow`, `ask`, `deny`
 - Bash patterns: valid glob syntax
 
 **Model:**
+
 - Format: `provider/model-id`
 
 **Temperature:**
+
 - Number between 0.0 and 1.0
 
 ---
@@ -466,18 +504,18 @@ description: >-
   <example>...</example>
 
 # Optional
-mode: primary|subagent|all              # default: all
-tools:                                  # default: global config
+mode: primary|subagent|all # default: all
+tools: # default: global config
   read: true
   write: false
-permission:                             # default: none
+permission: # default: none
   bash:
     "*": ask
     "git status*": allow
   edit: ask
-model: provider/model-id                # default: global model
-temperature: 0.1                        # default: model default
-maxSteps: 10                            # default: unlimited
-hidden: false                           # default: false (subagent only)
+model: provider/model-id # default: global model
+temperature: 0.1 # default: model default
+maxSteps: 10 # default: unlimited
+hidden: false # default: false (subagent only)
 ---
 ```

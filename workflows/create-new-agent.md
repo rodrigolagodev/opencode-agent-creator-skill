@@ -37,6 +37,7 @@ This workflow guides you through creating a new OpenCode agent from scratch usin
 
 ```markdown
 Agent Purpose Statement:
+
 - Primary role: [e.g., Security auditor for web applications]
 - Scope: [e.g., Read-only analysis of code for security vulnerabilities]
 - Users: [e.g., Development team members]
@@ -105,15 +106,18 @@ Based on your tool selection, which pattern fits best?
 ### Safety Verification
 
 If `bash` is selected:
+
 - [ ] Agent instructions include confirmation prompts for destructive operations
 - [ ] Backup procedures documented
 - [ ] Path verification before file operations
 
 If `write` is selected:
+
 - [ ] Agent checks if file exists before overwriting
 - [ ] read permission also granted
 
 If `edit` is selected:
+
 - [ ] read permission also granted
 
 ---
@@ -125,6 +129,7 @@ Reference: `references/skills-integration.md`
 ### Available Skills
 
 Check which skills are installed:
+
 ```bash
 ls ~/.config/opencode/skills/
 ```
@@ -141,7 +146,7 @@ Which skills will enhance your agent's capabilities?
 - [ ] `omarchy` - Omarchy Linux configuration
 - [ ] Other: `_______________`
 
-> **Note:** Skills are loaded at runtime using the `skill` tool. They are NOT declared 
+> **Note:** Skills are loaded at runtime using the `skill` tool. They are NOT declared
 > in agent frontmatter. The agent instructions should tell when to load specific skills.
 
 ---
@@ -151,6 +156,7 @@ Which skills will enhance your agent's capabilities?
 ### Primary Method: Use Write Tool Directly
 
 When working in OpenCode, simply use the Write tool to create:
+
 ```
 ~/.config/opencode/agent/your-agent-name.md
 ```
@@ -174,15 +180,15 @@ Reference: `references/frontmatter-spec.md`
 ---
 description: >-
   What this agent does in 1-2 sentences.
-  
+
   Use when [trigger conditions like: reviewing code, auditing security, etc.].
-  
+
   <example>
   User: "Review this endpoint for security issues"
   Assistant: "I'll use the `security-auditor` agent to review it."
   </example>
 
-mode: subagent  # or: primary, all
+mode: subagent # or: primary, all
 
 tools:
   read: true
@@ -217,9 +223,11 @@ permission:
 # Agent Name
 
 ## Overview
+
 [1-2 paragraph description of agent purpose and capabilities]
 
 ## Core Responsibilities
+
 1. [Primary responsibility]
 2. [Secondary responsibility]
 3. [Additional responsibilities...]
@@ -227,7 +235,9 @@ permission:
 ## Operating Principles
 
 ### Context First
+
 Before taking action on any request:
+
 1. **Identify what's missing** - What assumptions am I making? What constraints aren't stated?
 2. **Ask targeted questions** - Be specific, prioritize by impact, group related questions
 3. **Confirm understanding** - Summarize your understanding before proceeding
@@ -236,38 +246,46 @@ Before taking action on any request:
 Never proceed with significant changes based on assumptions alone.
 
 ### [Principle Category 1]
+
 - [Guideline 1]
 - [Guideline 2]
 
 ### [Principle Category 2]
+
 - [Guideline 1]
 - [Guideline 2]
 
 ## [Process/Workflow Name]
 
 ### [Step Category]
+
 1. [Action item]
 2. [Action item]
 
 ## Tool Usage Guide
 
 ### [tool-name]
+
 [When and how to use this tool]
 
 ## Example Workflows
 
 ### Workflow 1: [Workflow Name]
+
 \`\`\`markdown
+
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
-\`\`\`
+   \`\`\`
 
 ## Safety Protocols (if bash or write permissions)
+
 - [Safety measure 1]
 - [Safety measure 2]
 
 ## Limitations
+
 [What this agent CANNOT do]
 ```
 
@@ -295,6 +313,7 @@ Reference: `references/anti-patterns.md`
 ## Safety Protocols
 
 ### Before Destructive Operations
+
 - ALWAYS ask user for explicit confirmation
 - NEVER run `rm -rf` without verification
 - CHECK disk space before large operations
@@ -302,6 +321,7 @@ Reference: `references/anti-patterns.md`
 - VERIFY paths before operations
 
 ### Confirmation Pattern
+
 \`\`\`markdown
 I'm about to execute: [command]
 
@@ -319,6 +339,7 @@ Do you want to proceed? [wait for explicit yes]
 ## Safety Protocols
 
 ### Before Writing Files
+
 - CHECK if file already exists using read tool
 - WARN user if about to overwrite existing file
 - PREFER edit over write for modifications
@@ -332,6 +353,7 @@ Do you want to proceed? [wait for explicit yes]
 ### Create Test Scenarios
 
 1. **Basic Functionality Test**
+
    ```markdown
    Scenario: [Simple task agent should handle]
    Expected Behavior: [What agent should do]
@@ -339,6 +361,7 @@ Do you want to proceed? [wait for explicit yes]
    ```
 
 2. **Edge Case Test**
+
    ```markdown
    Scenario: [Unusual or edge case]
    Expected Behavior: [How agent should handle it]
@@ -409,34 +432,41 @@ If this agent will be shared, create documentation:
 # Agent Name
 
 ## Purpose
+
 [What this agent does]
 
 ## Use Cases
+
 - [Use case 1]
 - [Use case 2]
 
 ## Prerequisites
+
 - [Requirement 1]
 - [Requirement 2]
 
 ## Usage Examples
 
 ### Example 1: [Task]
+
 \`\`\`markdown
 User: [Request]
 Agent: [Response and actions]
 \`\`\`
 
 ## Limitations
+
 [What agent cannot do]
 
 ## Safety Considerations
+
 [Important safety notes]
 ```
 
 ### Add to Agent Repository
 
 If sharing publicly:
+
 1. Create git repository
 2. Add agent file
 3. Add README with usage instructions
@@ -446,6 +476,7 @@ If sharing publicly:
 ### Share with Team
 
 If internal use:
+
 1. Add to team's shared agents directory
 2. Document in team wiki
 3. Add to onboarding materials
@@ -473,6 +504,7 @@ If internal use:
 ### Issue: Agent doesn't load
 
 **Solutions**:
+
 - Check YAML frontmatter syntax (no tabs, proper indentation)
 - Verify file is in `~/.config/opencode/agent/` directory (singular, not agents)
 - Ensure file has `.md` extension
@@ -482,6 +514,7 @@ If internal use:
 ### Issue: Agent has permission errors
 
 **Solutions**:
+
 - Verify `tools` section enables required tools
 - Check `permission` patterns for bash/edit/write
 - Ensure permission names are spelled correctly
@@ -490,6 +523,7 @@ If internal use:
 ### Issue: Agent behavior is unclear
 
 **Solutions**:
+
 - Add more specific examples
 - Clarify operating principles
 - Add step-by-step workflows
@@ -498,6 +532,7 @@ If internal use:
 ### Issue: Agent is too risky
 
 **Solutions**:
+
 - Reduce permissions (especially bash, write)
 - Add safety protocols
 - Require explicit user confirmation
